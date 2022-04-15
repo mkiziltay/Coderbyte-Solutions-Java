@@ -1,0 +1,43 @@
+import java.util.*; 
+import java.io.*;
+
+/*
+Finding the next missing element of the given row in Pascal's triangle
+NCr  = (NCr - 1 * (N - r + 1)) / r where 1 ≤ r ≤ N
+current val = prev val * (row index-column index+1))/column index
+find 6th row 3th value so index=2
+ (6*(6-2+1))/2 = 15
+*/
+class Main {
+
+  public static int PascalsTriangle(int[] arr) {
+    // code goes here
+    if(arr.length == arr[1]+1)//if line fully completed return -1.
+    return -1;
+
+    return addNthrow(arr[1]).get(arr.length);
+  }
+
+  static List<Integer> addNthrow(int N){
+    List<Integer> rows = new ArrayList<>();
+
+    //nC0 = 1 : so first element
+    int prev = 1;
+    rows.add(prev);
+
+    for(int i=1;i<=N;i++){
+      //nCr = (nCr-1 * (n-r+1))/r
+      int curr = (prev * (N - i +1))/i;
+      rows.add(curr);
+      prev=curr;
+    }
+    return rows;
+  }
+
+  public static void main (String[] args) {  
+    // keep this function call here     
+    Scanner s = new Scanner(System.in);
+    System.out.print(PascalsTriangle(s.nextLine())); 
+  }
+
+}
